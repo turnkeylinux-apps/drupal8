@@ -1,3 +1,17 @@
+turnkey-drupal8-14.0 (1) turnkey; urgency=low                                                         
+
+  * Drupal8:
+
+    - Forked from Drupal7 appliance
+    - Latest dev version of Drush is now installed via composer at build time.
+    - Latest version of Drupal8 is installed via Drush.
+    - Latest versions of modules are now installed via Drush.
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Fri, 03 Jul 2015 11:21:28 +1000
+
 turnkey-drupal7-13.0 (1) turnkey; urgency=low
 
   * Drupal7:
