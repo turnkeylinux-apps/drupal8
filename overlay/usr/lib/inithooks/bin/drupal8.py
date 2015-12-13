@@ -4,7 +4,8 @@
 Option:
     --pass=     unless provided, will ask interactively
     --email=    unless provided, will ask interactively
-
+    --domain=   unless provided, will ask interactively
+                DEFAULT=www.example.com
 """
 
 import sys
@@ -23,16 +24,18 @@ def usage(s=None):
     print >> sys.stderr, __doc__
     sys.exit(1)
 
+DEFAULT_DOMAIN="www.example.com"
 
 def main():
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], "h",
-                                       ['help', 'pass=', 'email='])
+                                       ['help', 'pass=', 'email=', 'domain='])
     except getopt.GetoptError, e:
         usage(e)
 
     password = ""
     email = ""
+    domain = ""
     for opt, val in opts:
         if opt in ('-h', '--help'):
             usage()
@@ -40,7 +43,9 @@ def main():
             password = val
         elif opt == '--email':
             email = val
-
+        elif opt == '--domain':
+            domain = val
+            
     if not password:
         d = Dialog('TurnKey Linux - First boot configuration')
         password = d.get_password(
@@ -58,7 +63,21 @@ def main():
             "admin@example.com")
 
     inithooks_cache.write('APP_EMAIL', email)
-
+    
+    if not domain:
+        if 'd' not in locals():
+            d = Dialog('TurnKey Linux - First boot configuration')
+            
+            domain = d.get_input(
+                "Drupal8 Domain",
+                "Enter the domain to serve Drupal8.",
+                DEFAULT_DOMAIN)
+            
+    if domain == "DEFAULT":
+        domain = DEFAULT_DOMAIN
+                
+    inithooks_cache.write('APP_DOMAIN', domain)
+    
     m = MySQL()
     m.execute('UPDATE drupal8.users_field_data SET mail=\"%s\" WHERE name=\"admin\";' % email)
     m.execute('UPDATE drupal8.users_field_data SET init=\"%s\" WHERE name=\"admin\";' % email)
