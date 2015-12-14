@@ -58,11 +58,6 @@ chown root:www-data $SETTINGS
 chmod 640 $SETTINGS
 chown -R www-data:www-data $WEBROOT/sites/default/files
 
-# perhaps this should now go in $WEBROOT/libraries?!?
-LIBRARIES_PATH=$WEBROOT/sites/all/libraries
-mkdir -p $LIBRARIES_PATH/getid3/
-ln -s /usr/share/php-getid3 $LIBRARIES_PATH/getid3/getid3
-
 chown -R root:root $WEBROOT/sites/all
 
 # configure apache
