@@ -63,35 +63,33 @@ a2dissite 000-default
 a2ensite drupal8
 a2enmod rewrite 
 
-# from what I can gather currently the "poor man's cron" system is disabled by default in Drupal8 however I couldn't find 100% clear confirmation that that is the case (and will continue to be) so I  left this as is.
 # disable poor mans cron and setup drush cron
 cat >>$WEBROOT/sites/default/settings.php<< EOF
 
 /**
  * Disable Poor Man's Cron:
  *
- * Drupal 7 enables the built-in Poor Man's Cron by default.
+ * Drupal 8 enables the built-in Poor Man's Cron by default.
  * Poor Man's Cron relies on site activity to trigger Drupal's cron,
  * and is not well suited for low activity websites.
  *
  * We will use the Linux system cron and override Poor Man's Cron
- * by setting the cron_safe_threshold to 0.
  *
  * To re-enable Poor Man's Cron:
- *    Comment out (add a leading hash sign) the line below,
- *    and the system cron in /etc/cron.d/drupal7.
+ *    Comment out the line below, and disable the system cron
+ *    in /etc/cron.hourly/drupal8
  */
-\$conf['cron_safe_threshold'] = 0;
+\$config['automated_cron.settings']['interval'] = 0;
 EOF
 
-CRON_DRUPAL=/etc/cron.hourly/drupal7
+CRON_DRUPAL=/etc/cron.hourly/drupal8
 cat >$CRON_DRUPAL<<EOF
 #!/bin/bash -e
 # Trigger drush cron
 
 [ -x /usr/local/bin/drush ] || exit 0
 
-su www-data -c "/usr/local/bin/drush --quiet cron"
+su www-data -c "/usr/local/bin/drush cron"
 EOF
 chmod +x $CRON_DRUPAL
 
