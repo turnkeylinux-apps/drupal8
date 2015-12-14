@@ -58,23 +58,6 @@ chown root:www-data $SETTINGS
 chmod 640 $SETTINGS
 chown -R www-data:www-data $WEBROOT/sites/default/files
 
-# download and install modules
-# - ckeditor now part of core
-# - fivestart not yet avaialble for Drupal 8
-# - tagadelic not (yet?) avaialble for Drupal 8
-# - swapped colorbox for lightbox2 (no longer supported)
-# - jquery_ui now part of core
-# - email now part of core
-# - context is no longer under development
-# - migrate now part of core 
-# - views core
-# - entity in core
-# - content_access not (yet?) avbaiable fro D8 
-# - variable in core
-# - votingapi not yet available for D8
-# - i18n in core
-drush dl --default-major=8 panels backup_migrate devel imce recaptcha pathauto globalredirect webform logintoboggan admin_menu colorbox google_analytics advanced_help rules token link date features ctools captcha
-
 # perhaps this should now go in $WEBROOT/libraries?!?
 LIBRARIES_PATH=$WEBROOT/sites/all/libraries
 mkdir -p $LIBRARIES_PATH/getid3/
