@@ -24,7 +24,7 @@ curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 
 # install drush dev-master (drush8 required for drupal8)
-git clone --depth 1 https://github.com/drush-ops/drush.git $SRC/drush
+git clone --branch 8.0.x --depth 1 https://github.com/drush-ops/drush.git $SRC/drush
 cd $SRC/drush
 composer install
 ln -s $SRC/drush/drush /usr/local/bin/drush
@@ -58,64 +58,38 @@ chown root:www-data $SETTINGS
 chmod 640 $SETTINGS
 chown -R www-data:www-data $WEBROOT/sites/default/files
 
-# download and install modules
-# - ckeditor now part of core
-# - fivestart not yet avaialble for Drupal 8
-# - tagadelic not (yet?) avaialble for Drupal 8
-# - swapped colorbox for lightbox2 (no longer supported)
-# - jquery_ui now part of core
-# - email now part of core
-# - context is no longer under development
-# - migrate now part of core 
-# - views core
-# - entity in core
-# - content_access not (yet?) avbaiable fro D8 
-# - variable in core
-# - votingapi not yet available for D8
-# - i18n in core
-drush dl --default-major=8 panels backup_migrate devel imce recaptcha pathauto globalredirect webform logintoboggan admin_menu colorbox google_analytics advanced_help rules token link date features ctools captcha
-
-# perhaps this should now go in $WEBROOT/libraries?!?
-LIBRARIES_PATH=$WEBROOT/sites/all/libraries
-mkdir -p $LIBRARIES_PATH/getid3/
-ln -s /usr/share/php-getid3 $LIBRARIES_PATH/getid3/getid3
-
-chown -R root:root $WEBROOT/sites/all
-
 # configure apache
 a2dissite 000-default
 a2ensite drupal8
 a2enmod rewrite 
 
-# from what I can gather currently the "poor man's cron" system is disabled by default in Drupal8 however I couldn't find 100% clear confirmation that that is the case (and will continue to be) so I  left this as is.
 # disable poor mans cron and setup drush cron
 cat >>$WEBROOT/sites/default/settings.php<< EOF
 
 /**
  * Disable Poor Man's Cron:
  *
- * Drupal 7 enables the built-in Poor Man's Cron by default.
+ * Drupal 8 enables the built-in Poor Man's Cron by default.
  * Poor Man's Cron relies on site activity to trigger Drupal's cron,
  * and is not well suited for low activity websites.
  *
  * We will use the Linux system cron and override Poor Man's Cron
- * by setting the cron_safe_threshold to 0.
  *
  * To re-enable Poor Man's Cron:
- *    Comment out (add a leading hash sign) the line below,
- *    and the system cron in /etc/cron.d/drupal7.
+ *    Comment out the line below, and disable the system cron
+ *    in /etc/cron.hourly/drupal8
  */
-\$conf['cron_safe_threshold'] = 0;
+\$config['automated_cron.settings']['interval'] = 0;
 EOF
 
-CRON_DRUPAL=/etc/cron.hourly/drupal7
+CRON_DRUPAL=/etc/cron.hourly/drupal8
 cat >$CRON_DRUPAL<<EOF
 #!/bin/bash -e
 # Trigger drush cron
 
 [ -x /usr/local/bin/drush ] || exit 0
 
-su www-data -c "/usr/local/bin/drush --quiet cron"
+su www-data -c "/usr/local/bin/drush cron"
 EOF
 chmod +x $CRON_DRUPAL
 
