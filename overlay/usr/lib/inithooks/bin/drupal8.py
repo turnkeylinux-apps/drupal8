@@ -68,10 +68,10 @@ def main():
         if 'd' not in locals():
             d = Dialog('TurnKey Linux - First boot configuration')
             
-            domain = d.get_input(
-                "Drupal8 Domain",
-                "Enter the domain to serve Drupal8.",
-                DEFAULT_DOMAIN)
+        domain = d.get_input(
+            "Drupal8 Domain",
+            "Enter the domain to serve Drupal8.",
+            DEFAULT_DOMAIN)
             
     if domain == "DEFAULT":
         domain = DEFAULT_DOMAIN
