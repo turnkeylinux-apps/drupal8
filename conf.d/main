@@ -41,21 +41,21 @@ EOF
 drush dl drupal-8 --destination=$(dirname $WEBROOT)
 mv $(dirname $WEBROOT)/drupal-8* $WEBROOT
 
-SETTINGS=$WEBROOT/sites/default/settings.php
-cp $WEBROOT/sites/default/default.settings.php $SETTINGS
-chown www-data:www-data $SETTINGS
+CONF=$WEBROOT/sites/default/settings.php
+cp $WEBROOT/sites/default/default.settings.php $CONF
+chown www-data:www-data $CONF
 
 /etc/init.d/mysql start
 
-cd $(dirname $SETTINGS)
+cd $(dirname $CONF)
 
 drush site-install standard -y \
     --account-name=$ADMIN_NAME \
     --account-pass=$ADMIN_PASS \
     --site-name="TurnKey Drupal8" --db-su=root --db-su-pw=$MYSQL_PASS --db-url=mysql://$DB_USER:$DB_PASS@localhost/$DB_NAME
 
-chown root:www-data $SETTINGS
-chmod 640 $SETTINGS
+chown root:www-data $CONF
+chmod 640 $CONF
 chown -R www-data:www-data $WEBROOT/sites/default/files
 
 # configure apache
@@ -63,8 +63,13 @@ a2dissite 000-default
 a2ensite drupal8
 a2enmod rewrite 
 
+# insert "www.example.com" as default trusted_host (inithook will adjust)
+((LINE_NO=$(grep -n 'trusted_host_patterns' $CONF -A99 | grep -m 1 " \*/" | cut -d- -f1)+1))
+NEW_LINES="\$settings['trusted_host_patterns'] = array\(\n\t'^www\\\.example\\\.com\$',\n\);\n"
+sed -i "${LINE_NO}s|^$|${NEW_LINES}|" $CONF
+
 # disable poor mans cron and setup drush cron
-cat >>$WEBROOT/sites/default/settings.php<< EOF
+cat >> $CONF << EOF
 
 /**
  * Disable Poor Man's Cron:
