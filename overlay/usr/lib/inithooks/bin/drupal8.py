@@ -84,8 +84,10 @@ def main():
     system("/usr/local/bin/drush -y config-set contact.form.feedback recipients %s" % email)
     system("/usr/local/bin/drush -y config-set update.settings notification.emails.0 %s" % email)
     system("/usr/local/bin/drush -y config-set system.site mail %s" % email)
-    system("/usr/local/bin/drush cache-rebuild")
     system("/usr/local/bin/drush user-password admin --password='%s'" % password)
+    domain = domain.replace('.','\\\\\.')
+    system("sed -i \"/^\$settings\['trusted_host_patterns'\]/{n;s|.*|     '^%s$',|}\" /var/www/drupal8/sites/default/settings.php" % domain)
+    system("/usr/local/bin/drush cache-rebuild")
 
 if __name__ == "__main__":
     main()
