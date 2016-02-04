@@ -62,6 +62,21 @@ chown root:www-data $CONF
 chmod 640 $CONF
 chown -R www-data:www-data $WEBROOT/sites/default/files
 
+# download and install modules
+drush dl --default-major=8 \
+	field_group \
+	google_analytics \
+	honeypot \
+	imce \
+	pathauto \
+	token
+
+
+
+# Create default libraries path
+LIBRARIES_PATH=$WEBROOT/libraries
+mkdir -p $LIBRARIES_PATH/
+
 # configure apache
 a2dissite 000-default
 a2ensite drupal8
