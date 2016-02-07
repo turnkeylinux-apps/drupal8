@@ -68,6 +68,7 @@ chown -R www-data:www-data $WEBROOT/sites/default/files
 
 # download and install modules
 drush dl --default-major=8 \
+	ctools \
 	field_group \
 	google_analytics \
 	honeypot \
@@ -75,7 +76,15 @@ drush dl --default-major=8 \
 	pathauto \
 	token
 
+drush en -y \
+	ctools \
+	field_group \
+        google_analytics \
+        honeypot \
+        pathauto
 
+drush entity-updates -y
+drush cache-rebuild
 
 # Create default libraries path
 LIBRARIES_PATH=$WEBROOT/libraries
