@@ -4,7 +4,6 @@
 php5-readline
 
 php5-gd
-php5-curl           /* dependency of drupal module simpletest */
-php-getid3          /* dependency of drupal module getid3 */
-libssh2-php         /* support inline updates */
+libssh2-php     /* support inline updates */
+php5-twig	/* Twig C extension - improves rendering performance */
 
