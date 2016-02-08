@@ -75,6 +75,7 @@ Credentials *(passwords set at first boot)*
 .. _TurnKey Core: https://www.turnkeylinux.org/core
 .. _Security Alerts: https://www.turnkeylinux.org/docs/automatic-security-alerts
 .. _Field group: https://www.drupal.org/project/field_group
+.. _Google analytics: https://www.drupal.org/project/google_analytics
 .. _Honeypot: https://www.drupal.org/project/honeypot
 .. _Imce: http://drupal.org/project/imce
 .. _PathAuto: http://drupal.org/project/pathauto
