@@ -1,3 +1,22 @@
+turnkey-drupal8-14.1 (1) turnkey; urgency=low
+
+  * Drupal8:
+
+    - Latest stable version of Drush v8.0.x (installed via composer at build time).
+    - Latest version of Drupal 8 installed via Drush.
+    - Fixed cron (closes #559).
+    - Removed php5-xcache (#untracked-bug).
+    - Added inithook to set "Trusted Host" (closes #451).
+    - Changed included modules as per recommendation of Mike Stiv (drupal ninja).
+    - Latest versions of modules & dependencies installed (& some enabled).
+    - Removed superfluous dependencies & added Twig C extension (performance).
+    - Significant work contributed by Dashamir Hoxha (@dashohoxha).
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Mon, 08 Feb 2016 10:59:31 +1100
+
 turnkey-drupal8-14.0 (1) turnkey; urgency=low                                                         
 
   * Drupal8:
