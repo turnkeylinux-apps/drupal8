@@ -92,9 +92,8 @@ a2ensite drupal8
 a2enmod rewrite 
 
 # insert "www.example.com" as default trusted_host (inithook will adjust)
-((LINE_NO=$(grep -n 'trusted_host_patterns' $CONF -A99 | grep -m 1 " \*/" | cut -d- -f1)+1))
 NEW_LINES="\$settings['trusted_host_patterns'] = array\(\n\t'^www\\\.example\\\.com\$',\n\);\n"
-sed -i "${LINE_NO}s|^$|${NEW_LINES}|" $CONF
+sed -i "/trusted_host_patterns/,/\*\//{n;s|^$|${NEW_LINES}|}" $CONF
 
 # disable poor mans cron and setup drush cron
 cat >> $CONF << EOF
