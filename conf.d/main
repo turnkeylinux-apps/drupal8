@@ -28,7 +28,7 @@ curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 
 # install drush 8
-git clone --branch 8.0.x --depth 1 https://github.com/drush-ops/drush.git $SRC/drush
+git clone --branch 8.x --depth 1 https://github.com/drush-ops/drush.git $SRC/drush
 cd $SRC/drush
 composer install
 ln -s $SRC/drush/drush /usr/local/bin/drush
@@ -40,10 +40,6 @@ cat > /etc/drush/drushrc.php << EOF
 // by default use the drupal root directory
 \$options['r'] = '$WEBROOT';
 EOF
-
-# create drush user (for cron jobs)
-adduser --disabled-password --no-create-home --gecos "Drush user" drushuser
-adduser drushuser www-data
 
 # download latest drupal8 and install
 drush dl drupal-8 --destination=$(dirname $WEBROOT)
@@ -96,9 +92,8 @@ a2ensite drupal8
 a2enmod rewrite 
 
 # insert "www.example.com" as default trusted_host (inithook will adjust)
-((LINE_NO=$(grep -n 'trusted_host_patterns' $CONF -A99 | grep -m 1 " \*/" | cut -d- -f1)+1))
 NEW_LINES="\$settings['trusted_host_patterns'] = array\(\n\t'^www\\\.example\\\.com\$',\n\);\n"
-sed -i "${LINE_NO}s|^$|${NEW_LINES}|" $CONF
+sed -i "/trusted_host_patterns/,/\*\//{n;s|^$|${NEW_LINES}|}" $CONF
 
 # disable poor mans cron and setup drush cron
 cat >> $CONF << EOF
@@ -126,7 +121,7 @@ cat >$CRON_DRUPAL<<EOF
 
 [ -x /usr/local/bin/drush ] || exit 0
 
-su drushuser -c "/usr/local/bin/drush cron"
+su www-data -s /bin/bash -c "/usr/local/bin/drush --quiet cron"
 EOF
 chmod +x $CRON_DRUPAL
 
