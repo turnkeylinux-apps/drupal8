@@ -122,7 +122,7 @@ cat >$CRON_DRUPAL<<EOF
 
 [ -x /usr/local/bin/drush ] || exit 0
 
-su www-data -c "/usr/local/bin/drush cron"
+su www-data -s /bin/bash -c "/usr/local/bin/drush --quiet cron"
 EOF
 chmod +x $CRON_DRUPAL
 
