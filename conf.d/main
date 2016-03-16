@@ -28,7 +28,7 @@ curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 
 # install drush 8
-git clone --branch 8.0.x --depth 1 https://github.com/drush-ops/drush.git $SRC/drush
+git clone --branch 8.x --depth 1 https://github.com/drush-ops/drush.git $SRC/drush
 cd $SRC/drush
 composer install
 ln -s $SRC/drush/drush /usr/local/bin/drush
