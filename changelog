@@ -1,8 +1,8 @@
 turnkey-drupal8-14.2 (1) turnkey; urgency=low
 
-  * Updated Drupal8 to latest stable upstream (via drush).
+  * Updated Drupal8 to latest stable upstream (v8.3.1 - via drush).
 
-  * Updated Drush to latest stable upstream.
+  * Updated Drush to latest upstream (v8.1.12-dev).
 
   * Updated Adminer to 4.2.5
 
