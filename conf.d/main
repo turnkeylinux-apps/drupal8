@@ -41,7 +41,7 @@ CONF=$WEBROOT/sites/default/settings.php
 cp $WEBROOT/sites/default/default.settings.php $CONF
 chown www-data:www-data $CONF
 
-/etc/init.d/mysql start
+service mysql start
 
 cd $(dirname $CONF)
 
@@ -139,7 +139,7 @@ $MYSQL_BATCH --database=$DB_NAME --execute "INSERT INTO node_revision__body (bun
 # disable footer _ this is no longer the way to do it for Drupal8 but not 100% sure how to easily do it so have jsut left it as default
 #$MYSQL_BATCH --database=$DB_NAME --execute "UPDATE block SET region = '-1' WHERE delta = 'powered-by';
 
-/etc/init.d/mysql stop
+service mysql stop
 
 # unset proxy settings
 unset HTTP_PROXY
