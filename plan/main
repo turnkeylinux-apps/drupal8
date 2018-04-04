@@ -7,3 +7,4 @@ php-gd
 php-ssh2     /* support inline updates */
 php-twig	/* Twig C extension - improves rendering performance */
 php-xml
+php-curl
