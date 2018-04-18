@@ -11,6 +11,7 @@ Option:
 import sys
 import getopt
 import inithooks_cache
+import time
 
 from dialog_wrapper import Dialog
 from mysqlconf import MySQL
@@ -77,18 +78,13 @@ def main():
         domain = DEFAULT_DOMAIN
                 
     inithooks_cache.write('APP_DOMAIN', domain)
-    
+
+    print "Progress..."
     m = MySQL()
     m.execute('UPDATE drupal8.users_field_data SET mail=\"%s\" WHERE name=\"admin\";' % email)
     m.execute('UPDATE drupal8.users_field_data SET init=\"%s\" WHERE name=\"admin\";' % email)
-    system("/usr/local/bin/drush -y config-set contact.form.feedback recipients %s" % email)
-    system("/usr/local/bin/drush -y config-set update.settings notification.emails.0 %s" % email)
-    system("/usr/local/bin/drush -y config-set system.site mail %s" % email)
-    system("/usr/local/bin/drush user-password admin --password='%s'" % password)
     domain = domain.replace('.','\\\\\.')
-    system("sed -i \"/^\$settings\['trusted_host_patterns'\]/{n;s|.*|     '^%s$',|}\" /var/www/drupal8/sites/default/settings.php" % domain)
-    system("/usr/local/bin/drush cache-rebuild")
-
+    system('/usr/lib/inithooks/bin/drupalconf.sh -e {EMAIL} -p {PASSWORD} -d {DOMAIN}'.format(EMAIL=email, PASSWORD=password, DOMAIN=domain))
+    
 if __name__ == "__main__":
     main()
-
