@@ -68,7 +68,8 @@ profile:: **Edit > My newsletter** tab).
 Credentials *(passwords set at first boot)*
 -------------------------------------------
 
--  Webmin, SSH, MySQL, Adminer: username **root**
+-  Webmin, SSH, MySQL: username **root**
+-  Adminer: username **adminer**
 -  Drupal 8: username **admin**
 
 .. _Drupal: http://drupal.org
