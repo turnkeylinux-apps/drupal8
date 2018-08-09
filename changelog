@@ -1,3 +1,10 @@
+turnkey-drupal8-15.1 (1) turnkey; urgency=low
+
+  * Rebuilt to include Drupal 8.5.6 due to security issue. See
+    https://www.turnkeylinux.org/blog/drupal8-and-symfony-cve-2018-14773
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Thu, 09 Aug 2018 18:12:42 +1000
+
 turnkey-drupal8-15.0 (1) turnkey; urgency=low
 
   * Updated Drupal8 to latest stable upstream

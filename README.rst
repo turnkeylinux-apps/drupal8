@@ -15,7 +15,7 @@ and on top of that:
 
      **Security note**: Updates to Drupal may require supervision so
      they **ARE NOT** configured to install automatically. See below for
-     updating Drupal.
+     updating Drupal. And/or see `Drupal 8 documentation`_
 
    - Includes drush for command line administration and configuration.
 
@@ -75,6 +75,7 @@ Credentials *(passwords set at first boot)*
 .. _Drupal: http://drupal.org
 .. _TurnKey Core: https://www.turnkeylinux.org/core
 .. _Security Alerts: https://www.turnkeylinux.org/docs/automatic-security-alerts
+.. _Drupal 8 documentation: https://www.drupal.org/docs/8/update
 .. _Field group: https://www.drupal.org/project/field_group
 .. _Google analytics: https://www.drupal.org/project/google_analytics
 .. _Honeypot: https://www.drupal.org/project/honeypot
