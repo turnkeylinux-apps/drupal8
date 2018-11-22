@@ -11,6 +11,7 @@ Option:
 import sys
 import getopt
 import inithooks_cache
+import pipes
 import time
 
 from dialog_wrapper import Dialog
@@ -84,7 +85,8 @@ def main():
     m.execute('UPDATE drupal8.users_field_data SET mail=\"%s\" WHERE name=\"admin\";' % email)
     m.execute('UPDATE drupal8.users_field_data SET init=\"%s\" WHERE name=\"admin\";' % email)
     domain = domain.replace('.','\\\\\.')
-    system('/usr/lib/inithooks/bin/drupalconf.sh -e {EMAIL} -p {PASSWORD} -d {DOMAIN}'.format(EMAIL=email, PASSWORD=password, DOMAIN=domain))
+    system('/usr/lib/inithooks/bin/drupalconf.sh -e {EMAIL} -p {PASSWORD} -d {DOMAIN}'.format(
+        EMAIL=pipes.quote(email), PASSWORD=pipes.quote(password), DOMAIN=pipes.quote(domain)))
     
 if __name__ == "__main__":
     main()
