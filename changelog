@@ -1,6 +1,12 @@
 turnkey-drupal8-15.3 (1) turnkey; urgency=low
 
-  * Rebuild to resolve inadvertant removal of mariadb during sec-updates
+  * Includes latest upstream Drupal8 - v8.6.3.
+
+  * Fix escaping for inithook inputs to support complex passwords - closes
+    #1247
+    [ Stefan Davis ]
+
+  * Rebuild to resolve inadvertent removal of mariadb during sec-updates
     - part of #1246.
 
  -- Jeremy Davis <jeremy@turnkeylinux.org>  Wed, 21 Nov 2018 18:09:47 +1100
