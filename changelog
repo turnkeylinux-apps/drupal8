@@ -1,3 +1,9 @@
+turnkey-drupal8-15.4 (1) turnkey; urgency=low
+
+  * Update Drupal8 to latest upstream version - 8.6.7.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Tue, 22 Jan 2019 16:34:50 +1100
+
 turnkey-drupal8-15.3 (1) turnkey; urgency=low
 
   * Includes latest upstream Drupal8 - v8.6.3.
