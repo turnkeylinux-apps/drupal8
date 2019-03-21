@@ -1,9 +1,9 @@
 turnkey-drupal8-15.5 (1) turnkey; urgency=low
 
-  * Update Drupal8 to latest upstream version - 8.6.10. Resolves security
-    issues raised via SA-CORE-2019-003.
+  * Update Drupal8 to latest upstream version - 8.6.13. Resolves security
+    issues raised via SA-CORE-2019-003 plus others.
 
- -- Jeremy Davis <jeremy@turnkeylinux.org>  Mon, 04 Mar 2019 11:59:33 +1100
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Thu, 21 Mar 2019 16:39:57 +1100
 
 turnkey-drupal8-15.4 (1) turnkey; urgency=low
 
