@@ -110,7 +110,7 @@ cat >$CRON_DRUPAL<<EOF
 
 [ -x /usr/local/bin/drush ] || exit 0
 
-su www-data -s /bin/bash -c "/usr/local/bin/drush --quiet cron"
+su www-data -s /bin/bash -c "/usr/local/bin/drush --quiet cron --root=/var/www/drupal8"
 EOF
 chmod +x $CRON_DRUPAL
 
