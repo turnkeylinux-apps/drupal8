@@ -1,3 +1,15 @@
+turnkey-drupal8-15.6 (1) turnkey; urgency=low
+
+  * Update Drupal8 to latest upstream version - 8.6.14.
+
+  * Fix broken cron job - closes #1317.
+    [ Stefan Davis ]
+
+  * Update readme to include notes regarding composer update; plus new links
+    to docs.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Tue, 16 Apr 2019 14:01:18 +1000
+
 turnkey-drupal8-15.5 (1) turnkey; urgency=low
 
   * Update Drupal8 to latest upstream version - 8.6.13. Resolves security

@@ -11,13 +11,14 @@ and on top of that:
 
 - Drupal 8 configurations:
    
-   - Installed (using drush) from upstream source code to /var/www/drupal8
+   - Installed (using composer) from upstream source code to /var/www/drupal8
 
      **Security note**: Updates to Drupal may require supervision so
      they **ARE NOT** configured to install automatically. See below for
      updating Drupal. And/or see `Drupal 8 documentation`_
 
-   - Includes drush for command line administration and configuration.
+   - Includes drush and composer for command line administration and
+     configuration.
 
    - Drupal security update alerts delivered to your inbox - requires
      `Security Alerts`_ ('secalerts') be enabled on firstboot with a valid
@@ -55,11 +56,22 @@ Supervised Manual Drupal Update
 It is possible to check for and install updates from the Drupal Admin
 UI:: **Admin > Reports > Avaialble Updates**
 
-Or from the command line::
+Updates for Drupal8 Core often need to be done via commandline. For full
+details, please consult the `Drupal8 Upgrade docs`_, we recommend using
+`Composer to update from the commandline`_::
 
-    drush pm-refresh
-    drush pm-update --security-only --simulate
-    drush pm-update --security-only
+    cd /var/www/drupal8
+    # update composer - not strictly neccessary
+    composer self-update
+    composer update drupal/core webflo/drupal-core-require-dev --with-dependencies
+    drush updatedb -y
+    drush cr
+
+Modules can be updated like this, e.g. ctools::
+
+    composer update drupal/ctools
+    drush updatedb -y
+    drush cr
 
 We also recommend that you  subscribe to the drupal.org security
 newsletter (create a user account on drupal.org and within your drupal.org
@@ -72,15 +84,16 @@ Credentials *(passwords set at first boot)*
 -  Adminer: username **adminer**
 -  Drupal 8: username **admin**
 
-.. _Drupal: http://drupal.org
+.. _Drupal: https://drupal.org
 .. _TurnKey Core: https://www.turnkeylinux.org/core
 .. _Security Alerts: https://www.turnkeylinux.org/docs/automatic-security-alerts
 .. _Drupal 8 documentation: https://www.drupal.org/docs/8/update
 .. _Field group: https://www.drupal.org/project/field_group
 .. _Google analytics: https://www.drupal.org/project/google_analytics
 .. _Honeypot: https://www.drupal.org/project/honeypot
-.. _Imce: http://drupal.org/project/imce
-.. _PathAuto: http://drupal.org/project/pathauto
-.. _Token: http://drupal.org/project/token
-.. _Adminer: http://www.adminer.org
-
+.. _Imce: https://drupal.org/project/imce
+.. _PathAuto: https://drupal.org/project/pathauto
+.. _Token: https://drupal.org/project/token
+.. _Adminer: https://www.adminer.org
+.. _Drupal8 Upgrade docs: https://www.drupal.org/docs/8/update
+.. _Composer to update from the commandline: https://www.drupal.org/docs/8/update/update-core-via-composer
