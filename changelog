@@ -11,7 +11,7 @@ turnkey-drupal8-15.6 (1) turnkey; urgency=low
   * Update readme to include notes regarding composer update; plus new links
     to docs.
 
- -- Jeremy Davis <jeremy@turnkeylinux.org>  Thu, 02 May 2019 14:25:25 +1000
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Mon, 13 May 2019 16:24:19 +1000
 
 turnkey-drupal8-15.5 (1) turnkey; urgency=low
 
