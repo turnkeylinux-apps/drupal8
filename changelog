@@ -8,6 +8,9 @@ turnkey-drupal8-15.6 (1) turnkey; urgency=low
   * Fix broken cron job - closes #1317.
     [ Stefan Davis ]
 
+  * Include additional php packages (uploadprogress and mbstring) to improve
+    user experience.
+
   * Update readme to include notes regarding composer update; plus new links
     to docs.
 
