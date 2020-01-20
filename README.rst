@@ -20,12 +20,15 @@ and on top of that:
    - Includes drush and composer for command line administration and
      configuration.
 
+   - `Drupal Console`_ for generating code, and otherwise streamlining drupal
+     development and administration.
+
    - Drupal security update alerts delivered to your inbox - requires
      `Security Alerts`_ ('secalerts') be enabled on firstboot with a valid
      email address.
 
 - Bundled Drupal 8 modules and dependencies (installed to 
-  /var/www/drupal8/modules - new default for Drupal8):
+  /var/www/drupal8/web/modules - new default for Drupal8):
 
    - `Field group`_: Allows fields to be grouped together.
    - `Google analytics`_: Adds Google Analytics js tracking code to all
@@ -97,3 +100,4 @@ Credentials *(passwords set at first boot)*
 .. _Adminer: https://www.adminer.org
 .. _Drupal8 Upgrade docs: https://www.drupal.org/docs/8/update
 .. _Composer to update from the commandline: https://www.drupal.org/docs/8/update/update-core-via-composer
+.. _Drupal Console: https://drupalconsole.com/

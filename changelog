@@ -1,3 +1,16 @@
+turnkey-drupal8-16.0 (1) turnkey; urgency=low
+
+  * Update Drupal8 to latest upstream version - 8.8.1.
+
+  * Remove entity-updates - closes #1399.
+
+  * Added drupal console.
+
+  * Update readme to note inclusion of drupal console with links to upstream
+    website.
+
+ -- Stefan Davis <stefan@turnkeylinux.org>  Tue, 21 Jan 2020 08:30:27 +1100
+
 turnkey-drupal8-15.6 (1) turnkey; urgency=low
 
   * Update Drupal8 to latest upstream version - 8.7.1. Resolves:
