@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """Set Drupal8 admin password and email
 
 Option:
@@ -17,13 +17,13 @@ import time
 from dialog_wrapper import Dialog
 from mysqlconf import MySQL
 
-from executil import system
+import subprocess
 
 def usage(s=None):
     if s:
-        print >> sys.stderr, "Error:", s
-    print >> sys.stderr, "Syntax: %s [options]" % sys.argv[0]
-    print >> sys.stderr, __doc__
+        print("Error:", s, file=sys.stderr)
+    print("Syntax: %s [options]" % sys.argv[0], file=sys.stderr)
+    print(__doc__, file=sys.stderr)
     sys.exit(1)
 
 DEFAULT_DOMAIN="www.example.com"
@@ -32,7 +32,7 @@ def main():
     try:
         opts, args = getopt.gnu_getopt(sys.argv[1:], "h",
                                        ['help', 'pass=', 'email=', 'domain='])
-    except getopt.GetoptError, e:
+    except getopt.GetoptError as e:
         usage(e)
 
     password = ""
@@ -80,13 +80,17 @@ def main():
                 
     inithooks_cache.write('APP_DOMAIN', domain)
 
-    print "Progress..."
+    print("Progress...")
     m = MySQL()
     m.execute('UPDATE drupal8.users_field_data SET mail=\"%s\" WHERE name=\"admin\";' % email)
     m.execute('UPDATE drupal8.users_field_data SET init=\"%s\" WHERE name=\"admin\";' % email)
     domain = domain.replace('.','\\\\\.')
-    system('/usr/lib/inithooks/bin/drupalconf.sh -e {EMAIL} -p {PASSWORD} -d {DOMAIN}'.format(
-        EMAIL=pipes.quote(email), PASSWORD=pipes.quote(password), DOMAIN=pipes.quote(domain)))
+    subprocess.run([
+	'/usr/lib/inithooks/bin/drupalconf.sh',
+	'-e', email,
+	'-p', password,
+	'-d', domain
+    ])
     
 if __name__ == "__main__":
     main()

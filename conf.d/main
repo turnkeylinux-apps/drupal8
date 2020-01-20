@@ -14,10 +14,12 @@ WEBROOT=/var/www/drupal8
 [ "$FAB_HTTP_PROXY" ] && export HTTP_PROXY=$FAB_HTTP_PROXY
 
 # increase php cli memory limit (for drush)
-sed -i "s|^memory_limit.*|memory_limit = 128M|" /etc/php/7.0/cli/php.ini
+sed -i "s|^memory_limit.*|memory_limit = 128M|" /etc/php/7.3/cli/php.ini
 
 # increase php apache memory limit
-sed -i "s|^memory_limit.*|memory_limit = 64M|" /etc/php/7.0/apache2/php.ini
+sed -i "s|^memory_limit.*|memory_limit = 64M|" /etc/php/7.3/apache2/php.ini
+
+export HTTPS_PROXY_REQUEST_FULLURI=false # work around composer not working behind proxy
 
 # install drupal
 cd /var/www
@@ -29,6 +31,12 @@ wget -O drush.phar https://github.com/drush-ops/drush-launcher/releases/download
 chmod +x drush.phar
 mv drush.phar /usr/local/bin/drush
 drush self-update
+
+# install drupal console launcher
+wget -O drupal.phar -L https://drupalconsole.com/installer
+chmod +x drupal.phar
+mv drupal.phar /usr/local/bin/drupal
+drupal self-update
 
 CONF=$WEBROOT/web/sites/default/settings.php
 cp $WEBROOT/web/sites/default/default.settings.php $CONF
@@ -51,6 +59,7 @@ drush site-install standard -y \
 
 
 # download and install modules
+composer require drupal/console:^1.0 --prefer-dist --optimize-autoloader
 composer require drupal/ctools
 composer require drupal/field_group
 composer require drupal/google_analytics
@@ -66,7 +75,6 @@ drush en -y \
     honeypot \
     pathauto
 
-drush entity-updates -y
 drush cache-rebuild
 
 # Create default libraries path
