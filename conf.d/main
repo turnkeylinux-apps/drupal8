@@ -14,7 +14,7 @@ WEBROOT=/var/www/drupal8
 [ "$FAB_HTTP_PROXY" ] && export HTTP_PROXY=$FAB_HTTP_PROXY
 
 # increase php cli memory limit (for drush)
-sed -i "s|^memory_limit.*|memory_limit = 128M|" /etc/php/7.3/cli/php.ini
+sed -i "s|^memory_limit.*|memory_limit = 2048M|" /etc/php/7.3/cli/php.ini
 
 # increase php apache memory limit
 sed -i "s|^memory_limit.*|memory_limit = 64M|" /etc/php/7.3/apache2/php.ini

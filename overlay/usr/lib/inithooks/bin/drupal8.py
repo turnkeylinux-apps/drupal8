@@ -82,8 +82,8 @@ def main():
 
     print("Progress...")
     m = MySQL()
-    m.execute('UPDATE drupal8.users_field_data SET mail=\"%s\" WHERE name=\"admin\";' % email)
-    m.execute('UPDATE drupal8.users_field_data SET init=\"%s\" WHERE name=\"admin\";' % email)
+    m.execute('UPDATE drupal8.users_field_data SET mail=%s WHERE name=\"admin\";', (email,))
+    m.execute('UPDATE drupal8.users_field_data SET init=%s WHERE name=\"admin\";', (email,))
     domain = domain.replace('.','\\\\\.')
     subprocess.run([
 	'/usr/lib/inithooks/bin/drupalconf.sh',
