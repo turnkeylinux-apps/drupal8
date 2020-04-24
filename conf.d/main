@@ -10,24 +10,42 @@ ADMIN_PASS=turnkey
 SRC=/usr/local/src
 WEBROOT=/var/www/drupal8
 
+PHP_V=7.3
+USER=www-data
+
 # set proxy settings
 [ "$FAB_HTTP_PROXY" ] && export HTTP_PROXY=$FAB_HTTP_PROXY
 
-# increase php cli memory limit (for drush)
-sed -i "s|^memory_limit.*|memory_limit = 128M|" /etc/php/7.0/cli/php.ini
+# increase php cli memory limit - for composer install.
+sed -i "s|^memory_limit.*|memory_limit = 768M|" /etc/php/${PHP_V}/cli/php.ini
 
 # increase php apache memory limit
-sed -i "s|^memory_limit.*|memory_limit = 64M|" /etc/php/7.0/apache2/php.ini
+sed -i "s|^memory_limit.*|memory_limit = 64M|" /etc/php/${PHP_V}/apache2/php.ini
 
-# install drupal
-cd /var/www
-composer create-project drupal-composer/drupal-project:8.x-dev drupal8 --no-dev --no-interaction
-chown www-data:www-data drupal8
+export HTTPS_PROXY_REQUEST_FULLURI=false # work around composer not working behind proxy
+export COMPOSER_MEMORY_LIMIT=-1 # temporarily disable composer memory limits during install
+
+# install drupal8
+composer create-project drupal/recommended-project $WEBROOT --no-dev --no-interaction
+chown $USER:$USER $WEBROOT
+
+# install drupal console (seems to fail if installed after drush for some reason?!)
+cd $WEBROOT
+composer require drupal/console:^1.0 --prefer-dist --optimize-autoloader
+
+# install drupal console launcher
+cd / # drupal self-update fails from WEBROOT?!
+wget -O /usr/local/bin/drupal -L https://drupalconsole.com/installer
+chmod +x /usr/local/bin/drupal
+drupal self-update
 
 # install drush
-wget -O drush.phar https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar
-chmod +x drush.phar
-mv drush.phar /usr/local/bin/drush
+cd $WEBROOT
+composer require drush/drush
+
+# install global drush-launcher (drush installed as drupal module via composer above)
+wget -O /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/latest/download/drush.phar
+chmod +x /usr/local/bin/drush
 drush self-update
 
 CONF=$WEBROOT/web/sites/default/settings.php
@@ -49,7 +67,6 @@ drush site-install standard -y \
     --site-name="TurnKey Drupal8" \
     --db-url=mysql://$DB_USER:$DB_PASS@localhost/$DB_NAME
 
-
 # download and install modules
 composer require drupal/ctools
 composer require drupal/field_group
@@ -66,7 +83,6 @@ drush en -y \
     honeypot \
     pathauto
 
-drush entity-updates -y
 drush cache-rebuild
 
 # Create default libraries path
