@@ -27,6 +27,11 @@ and on top of that:
      `Security Alerts`_ ('secalerts') be enabled on firstboot with a valid
      email address.
 
+   - **Note** - For trouble free commandline usage (i.e. Composer, Drush
+     and/or Drupal console) PHP RAM limit may need to be bumped to 2048MB.
+     or that to work, the system requires at least 2GB+ free memory (physical
+     &/or virtual; i.e. swap - a temporary swap file is acceptable).
+
 - Bundled Drupal 8 modules and dependencies (installed to 
   /var/www/drupal8/web/modules - new default for Drupal8):
 
