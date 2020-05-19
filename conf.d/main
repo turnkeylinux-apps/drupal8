@@ -89,6 +89,9 @@ drush cache-rebuild
 LIBRARIES_PATH=$WEBROOT/libraries
 mkdir -p $LIBRARIES_PATH/
 
+# Ensure 'files' dir is writeable by webserver
+chown -R $USER:$USER $WEBROOT/web/sites/default/files
+
 # configure apache
 a2dissite 000-default
 a2ensite drupal8
