@@ -1,9 +1,29 @@
+turnkey-drupal8-16.1 (1) turnkey; urgency=low
+
+  * Update Drupal8 to latest upstream version - 8.9.13. Resolves a number of
+    security related issues.
+
+  * Update Drush to latest - 10.3.6.
+
+  * Include 'turnkey-composer' wrapper script - runs composer as www-data
+    user. Makes it easy to not run composer as root - part of #1539.
+
+  * Also include 'turnkey-drush' and 'turnkey-drupal' wrapper scripts.
+
+  * Explicitly install composer via Makefile (rather than automatically include
+    in all LAMP based appliances) - part of #1563.
+
+  * Note: Please refer to turnkey-core's 16.1 changelog for changes common to
+    all appliances. Here we only describe changes specific to this appliance.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Thu, 11 Feb 2021 14:58:34 +1100
+
 turnkey-drupal8-16.0 (1) turnkey; urgency=low
 
   * Update Drupal8 to latest upstream version - 8.8.5. Now using
     drupal/recommended-project (v15.x used drupal-composer/drupal-project).
 
-  * Update Drush to v10.2 (now explictly installed via Composer)
+  * Update Drush to v10.2 (now explicitly installed via Composer)
 
   * Remove entity-updates - closes #1399.
 
@@ -16,10 +36,10 @@ turnkey-drupal8-16.0 (1) turnkey; urgency=low
   * Update readme to note inclusion of Drupal Console with links to upstream
     website.
 
-  * Explcitly disable TLS<1.2 (i.e. SSLv3, TLSv1, TLSv1.1). (v15.x
+  * Explicitly disable TLS<1.2 (i.e. SSLv3, TLSv1, TLSv1.1). (v15.x
     TurnKey releases supported TLS 1.2, but could fallback as low as TLSv1).
 
-  * Update SSL/TLS cyphers to provide "Intermediate" browser/client support
+  * Update SSL/TLS ciphers to provide "Intermediate" browser/client support
     (suitable for "General-purpose servers with a variety of clients,
     recommended for almost all systems"). As provided by Mozilla via
     https://ssl-config.mozilla.org/.
@@ -152,7 +172,7 @@ turnkey-drupal8-14.1 (1) turnkey; urgency=low
 
  -- Jeremy Davis <jeremy@turnkeylinux.org>  Mon, 08 Feb 2016 10:59:31 +1100
 
-turnkey-drupal8-14.0 (1) turnkey; urgency=low                                                         
+turnkey-drupal8-14.0 (1) turnkey; urgency=low
 
   * Drupal8:
 
@@ -161,7 +181,7 @@ turnkey-drupal8-14.0 (1) turnkey; urgency=low
     - Latest version of Drupal8 is installed via Drush.
     - Latest versions of modules are now installed via Drush.
 
-  * Replaced PHPMyAdmin with Adminer
+  * Replaced phpMyAdmin with Adminer
 
   * Hardened default SSL settings
   
@@ -178,7 +198,7 @@ turnkey-drupal7-13.0 (1) turnkey; urgency=low
     - Latest version of Drupal7 is now installed via Drush.
     - Latest versions of modules are now installed via Drush.
 
-  * PHPMyAdmin:
+  * phpMyAdmin:
 
     - Configured to allow users preferences stored in database.
     - Specified blowfish_secret and regeneration on firstboot (security).
@@ -198,13 +218,13 @@ turnkey-drupal7-12.1 (1) turnkey; urgency=low
     - Fixed support for complex passwords in inithook (LP#1102662).
     - Increased php cli memory limit for Drush (LP#1048443).
 
-  * Added phpsh (interative shell for PHP) and php5-cli (generically useful).
+  * Added phpsh (interactive shell for PHP) and php5-cli (generically useful).
 
   * Upstream source component versions:
 
     ckeditor        4.0.2
 
-  * Replaced PHPMyAdmin with Adminer
+  * Replaced phpMyAdmin with Adminer
 
   * Hardened default SSL settings
 

@@ -26,12 +26,13 @@ export HTTPS_PROXY_REQUEST_FULLURI=false # work around composer not working behi
 export COMPOSER_MEMORY_LIMIT=-1 # temporarily disable composer memory limits during install
 
 # install drupal8
-composer create-project drupal/recommended-project $WEBROOT --no-dev --no-interaction
+mkdir -p $WEBROOT
 chown $USER:$USER $WEBROOT
+turnkey-composer create-project drupal/recommended-project $WEBROOT --no-dev --no-interaction
 
 # install drupal console (seems to fail if installed after drush for some reason?!)
 cd $WEBROOT
-composer require drupal/console:^1.0 --prefer-dist --optimize-autoloader
+turnkey-composer require drupal/console:^1.0 --prefer-dist --optimize-autoloader --no-interaction
 
 # install drupal console launcher
 cd / # drupal self-update fails from WEBROOT?!
@@ -41,7 +42,7 @@ drupal self-update
 
 # install drush
 cd $WEBROOT
-composer require drush/drush
+turnkey-composer require drush/drush --no-interaction
 
 # install global drush-launcher (drush installed as drupal module via composer above)
 wget -O /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/latest/download/drush.phar
@@ -50,6 +51,7 @@ drush self-update
 
 CONF=$WEBROOT/web/sites/default/settings.php
 cp $WEBROOT/web/sites/default/default.settings.php $CONF
+chown $USER:$USER $CONF
 
 service mysql start
 
@@ -61,29 +63,32 @@ $MYSQL "CREATE USER $DB_USER@localhost IDENTIFIED BY \"$DB_PASS\";"
 $MYSQL "GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES ON \
     $DB_NAME.* TO $DB_USER@localhost IDENTIFIED BY \"$DB_PASS\";"
 
-drush site-install standard -y \
+turnkey-drush site-install standard -y \
     --account-name=$ADMIN_NAME \
     --account-pass=$ADMIN_PASS \
     --site-name="TurnKey Drupal8" \
     --db-url=mysql://$DB_USER:$DB_PASS@localhost/$DB_NAME
 
 # download and install modules
-composer require drupal/ctools
-composer require drupal/field_group
-composer require drupal/google_analytics
-composer require drupal/honeypot
-composer require drupal/imce
-composer require drupal/pathauto
-composer require drupal/token
+MODULES="drupal/ctools \
+         drupal/field_group \
+         drupal/google_analytics \
+         drupal/honeypot \
+         drupal/imce \
+         drupal/pathauto \
+         drupal/token"
+for module in $MODULES; do
+    turnkey-composer require $module --no-interaction
+done
 
-drush en -y \
+turnkey-drush en -y \
     ctools \
     field_group \
     google_analytics \
     honeypot \
     pathauto
 
-drush cache-rebuild
+turnkey-drush cache-rebuild
 
 # Create default libraries path
 LIBRARIES_PATH=$WEBROOT/libraries
