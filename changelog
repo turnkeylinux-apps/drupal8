@@ -1,3 +1,11 @@
+turnkey-drupal8-16.2 (1) turnkey; urgency=low
+
+  * Update Drupal8 to latest upstream version - 8.9.18.
+
+  * Ensure that it's actually installing Drupal v8! Closes #1626.
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Wed, 25 Aug 2021 10:05:51 +1000
+
 turnkey-drupal8-16.1 (1) turnkey; urgency=low
 
   * Update Drupal8 to latest upstream version - 8.9.13. Resolves a number of

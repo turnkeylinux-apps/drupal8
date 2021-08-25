@@ -28,7 +28,7 @@ export COMPOSER_MEMORY_LIMIT=-1 # temporarily disable composer memory limits dur
 # install drupal8
 mkdir -p $WEBROOT
 chown $USER:$USER $WEBROOT
-turnkey-composer create-project drupal/recommended-project $WEBROOT --no-dev --no-interaction
+turnkey-composer create-project drupal/recommended-project:8.x $WEBROOT --no-dev --no-interaction
 
 # install drupal console (seems to fail if installed after drush for some reason?!)
 cd $WEBROOT
